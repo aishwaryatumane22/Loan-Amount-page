@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="../cascading//anything.css">
+    <script>
+    function validateSubmit() {
+        let errorName = document.getElementById("fullname-error").innerText;
+        let errorEmail = document.getElementById("error-email").innerText;
+        let errorPan = document.getElementById("error-pan").innerText;
+        let errorAmt = document.getElementById('error-amt').innerText;
+
+    }
+        // let fullName = document.getElementById('fullname');
+        // document.addEventListener('change',handleChange)
+        function handleNameChange() {
+            console.log("nameValue", document.getElementById('fullname').value.typeof)
+            var name = document.getElementById('fullname').value;
+            var error_value = "";
+            if (name.split(" ").length > 1) {
+                let nameArray = name.split(" ");
+                if (nameArray[0].length < 4 || nameArray[1].length < 4) {
+                    error_value = "firstname and lastname should have atleast 4 character each."
+                }
+            } else if (name === "" || name.split(" ").length === 1) {
+
+                error_value = "please enter you full name as First name and last name"
+
+            }
+            document.getElementById("fullname-error").innerText = error_value;
+
+        }
+
+        function validateEmail() {
+            var validEmailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+            var email = document.getElementById("email").value;
+            var errorTag = document.getElementById("error-email");
+            if (!email.match(validEmailRegex)) {
+                errorTag.innerText = "Please enter valid email id"
+            } else {
+                errorTag.innerText = "";
+            }
+        }
+
+        function validatePanNo() {
+            var validPanRegex = /[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+            var panNo = document.getElementById("PANCard").value;
+            var errorPan = document.getElementById("error-pan");
+            if (!panNo.match(validPanRegex)) {
+                errorPan.innerText = "Please enter valid pan No";
+            } else {
+                errorPan.innerText = "";
+            }
+        }
+
+        function validateLoanAmt() {
+            var loanAmount = document.getElementById('lamount').value;
+            var errorAmt = document.getElementById('error-amt');
+            var amountInWords = document.getElementById('amt-in-word');
+            if (loanAmount == '' || loanAmount == '0') {
+                errorAmt.innerText = "Please enter Loan Amount"
+            } else {
+                errorAmt.innerText = "";
+                amountInWords.innerText = inWords(loanAmount)
+            }
+        }
+        function inWords(num) {
+            var a = ['', 'one ', 'two ', 'three ', 'four ', 'five ', 'six ', 'seven ', 'eight ', 'nine ', 'ten ', 'eleven ', 'twelve ', 'thirteen ', 'fourteen ', 'fifteen ', 'sixteen ', 'seventeen ', 'eighteen ', 'nineteen '];
+            var b = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+            n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+            if (!n) return; 
+            var str = '';
+            str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + 'crore ' : '';
+            str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'lakh ' : '';
+            str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'thousand ' : '';
+            str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'hundred ' : '';
+            str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'only ' : '';
+            return str;
+        } 
+    </script>
+</head>
+
+<body>
+    <h2> Loan Application Page </h2>
+    <form id="form" method="get" action="Success.html" onsubmit="validateSubmit()">
+        <label for="fullname"> Full Name : </label>
+        <input type="text" id="fullname" placeholder="enter Your fullname" onchange="handleNameChange()" value=""
+            name="fullName"required /><br>
+        <span id="fullname-error"></span>
+        <br>
+        <label for="email">Email :</label>
+        <input placeholder="Enter email address" type="email" id="email" name="email" onchange="validateEmail()"
+            required /><br>
+        <span id="error-email"></span>
+        <br>
+        <label for="PANCard"> PAN Card :</label>
+        <input style="width:200px;" placeholder="enter Your Pan card Number"
+            oninput="this.value = this.value.toUpperCase()" onchange="validatePanNo()" type="text" id="PANCard"
+            name="PANCard" maxlength="10" class="PAN" required/><br>
+        <span id="error-pan"></span>
+        <br>
+        <label for="lamount"> Loan Amount :</label>
+        <input style="width:200px;" oninput="this.value = this.value.match(/^[0-9]*$/)" onchange="validateLoanAmt()"
+            placeholder="enter Loan Amount" type="text" id="lamount" name="lamount" maxlength="9" required/>
+        <span id="amt-in-word"></span>
+        <br><span id="error-amt"></span>
+        <input type="submit"/>
+    </form>
+
+</body>
+
+</html>

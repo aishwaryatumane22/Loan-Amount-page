@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success Loan Application</title>
+    <style>
+      h1 ,h2 {
+        text-align: center;
+      }
+    </style>
+   
+</head>
+<body>
+
+        <h1>Thank you</h1>
+    <p>
+        Dear <span id="name"></span>,<br/>
+            Thank you for your inquiry. A 4 digit verification number has been sent to your email: <span id="email"></span>,
+            <br/>please enter it in the following box and submit for confirmation: 
+            <input id="otp" name="otp" onchange="verifyOtp()" type="number" /><br/>
+            <span id="msg"></span>
+            <br/>
+            
+    </p>
+    <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        var fullName = urlParams.get("fullName");
+        var email = urlParams.get("email");
+        document.getElementById("name").innerHTML = fullName;
+        document.getElementById("email").innerHTML = email;
+        var otp = parseInt(1000+Math.random() * 9000);
+        console.log("otp",otp)
+        function verifyOtp(){
+            let newOtp = document.getElementById("otp").value;
+            
+                if(newOtp==otp){
+                document.getElementById("msg").innerText ="ValidationSuccessful!";
+                
+                    window.location.replace("http://pixel6.co/");
+               
+                
+            }else{
+                document.getElementById("msg").innerTextvalue ="Valication failed";
+               
+                    window.location.replace("http://pixel6.co/404/");
+               
+            }
+        }
+    </script>
+</body>
+</html>
