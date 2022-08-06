@@ -4,11 +4,19 @@
 <head>
     <link rel="stylesheet" href="../cascading//anything.css">
     <script>
+       var  error=false;
     function validateSubmit() {
-        let errorName = document.getElementById("fullname-error").innerText;
-        let errorEmail = document.getElementById("error-email").innerText;
-        let errorPan = document.getElementById("error-pan").innerText;
-        let errorAmt = document.getElementById('error-amt').innerText;
+       // event.preventDefault()
+        
+        if(error==true){
+            console.log(error)
+           // returnToPreviousPage();
+            return false;
+        }else{
+            console.log(error)
+            return true;
+        }
+
 
     }
         // let fullName = document.getElementById('fullname');
@@ -17,13 +25,15 @@
             console.log("nameValue", document.getElementById('fullname').value.typeof)
             var name = document.getElementById('fullname').value;
             var error_value = "";
+            error=false
             if (name.split(" ").length > 1) {
                 let nameArray = name.split(" ");
                 if (nameArray[0].length < 4 || nameArray[1].length < 4) {
-                    error_value = "firstname and lastname should have atleast 4 character each."
+                    error_value = "firstname and lastname should have atleast 4 character each.";
+                    error=true
                 }
             } else if (name === "" || name.split(" ").length === 1) {
-
+                error=true
                 error_value = "please enter you full name as First name and last name"
 
             }
@@ -36,8 +46,10 @@
             var email = document.getElementById("email").value;
             var errorTag = document.getElementById("error-email");
             if (!email.match(validEmailRegex)) {
+                error=true
                 errorTag.innerText = "Please enter valid email id"
             } else {
+                error=false
                 errorTag.innerText = "";
             }
         }
@@ -47,8 +59,10 @@
             var panNo = document.getElementById("PANCard").value;
             var errorPan = document.getElementById("error-pan");
             if (!panNo.match(validPanRegex)) {
+                error=true
                 errorPan.innerText = "Please enter valid pan No";
             } else {
+                error=false;
                 errorPan.innerText = "";
             }
         }
@@ -82,9 +96,9 @@
 
 <body>
     <h2> Loan Application Page </h2>
-    <form id="form" method="get" action="Success.html" onsubmit="validateSubmit()">
+    <form id="form" method="get" action="Success.html" onsubmit="return validateSubmit()">
         <label for="fullname"> Full Name : </label>
-        <input type="text" id="fullname" placeholder="enter Your fullname" onchange="handleNameChange()" value=""
+        <input type="text" id="fullname" onkeydown="return /[a-z ]/i.test(event.key)" placeholder="enter Your fullname" onchange="handleNameChange()" value=""
             name="fullName"required /><br>
         <span id="fullname-error"></span>
         <br>
